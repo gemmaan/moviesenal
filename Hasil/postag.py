@@ -15,10 +15,7 @@ def loadWordset(filestp):
         line = line.strip().lower()
         wordSet.append(line)
     return wordSet
-# sebelum masuk ke pos tagger harus di tokenize dulu
-# tokenize tidak hanya dengan spasi. kalau ada "saya makan mie, nasi goreng, ..." kalo hanya dnegan spasi jadinya "mie,"
-# tokenize menggunakan machine learning
-####Sentence Tokenizer####
+
 posWordSet = loadWordset('positive-words.txt')
 negWordSet = loadWordset('negative-words.txt')
 
@@ -46,8 +43,8 @@ for tweet in fg:
 				fpg.write(word+'\n')	
 			# kalau dia ada di file positive, tulis ke positive txt
 			if word in negWordSet:
-				fng.write(word+'\n')	
-# print tagged_all
+				fng.write(word+'\n')
+
 # tag_fd = FreqDist(tag for (word, tag) in tagged_all)
 
 #plot frequency distribution
