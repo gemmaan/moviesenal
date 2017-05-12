@@ -63,7 +63,7 @@ def scanTweets(filename, thresholdBottom, thresholdUp):
     frequent_tuples = [(tuple,count) for (tuple,count) in tuple_count.items() if ((count >= thresholdBottom) and (count <= thresholdUp))]
     return frequent_tuples
 
-def createEdgeAndNodeList(frequent_tuples, prefixOutFileName):
+def createEdgeAndNodeList(frequent_tuples, prefixOutFileName,movieName):
     #mapping word->id
     word_id = {}
     current_idx = 0
@@ -77,19 +77,20 @@ def createEdgeAndNodeList(frequent_tuples, prefixOutFileName):
             word_id[word2] = current_idx
 
     #loop sekali lagi buat NodeList
-    fileNode = open(prefixOutFileName+'-nodes.csv', 'w')
+    fileNode = open(prefixOutFileName+'-nodes-'+movieName+'.csv', 'w')
     fileNode.write('id;label'+'\n')
     for word in word_id.keys():
         fileNode.write(str(word_id[word])+";"+word+"\n")
 
     #loop sekali lagi buat EdgeList
     max_weight = max([count for (_,count) in frequent_tuples])
-    fileEdge = open(prefixOutFileName+'-edges.csv', 'w')
+    fileEdge = open(prefixOutFileName+'-edges-'+movieName+'.csv', 'w')
     fileEdge.write('Source;Target;Type;id;weight'+'\n')
     i = 1;
     for (tuple,count) in frequent_tuples:
         fileEdge.write(str(word_id[tuple[0]])+";"+str(word_id[tuple[1]])+";Undirected;"+str(i)+";"+str(count/max_weight)+'\n')
         i += 1
 
-createEdgeAndNodeList(scanTweets("tweet.tweets", 40, 200), "wan")
+createEdgeAndNodeList(scanTweets("tweet-ff.tweets", 0, 1000), "wan","ff")
+createEdgeAndNodeList(scanTweets("tweet-gotg.tweets", 0, 1000), "wan","gotg")
 
