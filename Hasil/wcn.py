@@ -91,5 +91,5 @@ def createEdgeAndNodeList(frequent_tuples, prefixOutFileName):
         fileEdge.write(str(word_id[tuple[0]])+";"+str(word_id[tuple[1]])+";Undirected;"+str(i)+";"+str(count/max_weight)+'\n')
         i += 1
 
-createEdgeAndNodeList(scanTweets("tweet.tweets", 40, 200), "wan")
+createEdgeAndNodeList(scanTweets("tweet-ff.tweets", 40, 200), "wan")
 
