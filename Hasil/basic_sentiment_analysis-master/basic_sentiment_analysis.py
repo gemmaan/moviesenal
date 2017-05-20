@@ -138,10 +138,14 @@ def sentence_score(sentence_tokens, previous_token, acum_score):
 def sentiment_score(review):
     return sum([sentence_score(sentence, None, 0.0) for sentence in review])
 
-fw = open('tweet-ff.txt', 'r')
+# fw = open('tweet-ff.txt', 'r')
+fw = open('tweet-gotg.txt', 'r')
 
 if __name__ == "__main__":
-    score_arr=[];
+    score_arr=[]
+    pos_count = 0
+    neg_count = 0
+    neut_count = 0
     for tweet in fw:
         splitter = Splitter()
         postagger = POSTagger()
@@ -160,15 +164,24 @@ if __name__ == "__main__":
         print("analyzing sentiment...")
         score = sentiment_score(dict_tagged_sentences)
         score_arr.append(score)
-        print(score)
-        # if score > 0:
-        #     print tweet+", "+ positive
-        # elif score < 0
-        #     print tweet+", "+ negative
-        # elif score==0:
-        #     print tweet+", "+ neutral
-        # print tweet + "/n" 
-        # print score
+        if score < 0:
+            neg_count+=1
+        elif score > 0:
+            pos_count+=1
+        elif score == 0:
+            neut_count+=1
+
+        #untuk menganalisa kumulatif positif dan negatifnya
+        # if score < 0:
+        #     score_arr.append(-1)
+        # elif score > 0:
+        #     score_arr.append(1)
+        # elif score == 0:
+        #     score_arr.append(0)
+        # print(score)
+    print neut_count
+    print pos_count
+    print neg_count
     score_fd=FreqDist(score_arr)     
     score_fd.plot(cumulative=False) 
 
