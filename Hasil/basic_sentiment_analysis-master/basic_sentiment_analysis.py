@@ -139,7 +139,7 @@ def sentiment_score(review):
     return sum([sentence_score(sentence, None, 0.0) for sentence in review])
 
 # fw = open('tweet-ff.txt', 'r')
-fw = open('tweet-gotg.txt', 'r')
+fw = open('tweet-ff.txt', 'r')
 
 if __name__ == "__main__":
     score_arr=[]
@@ -161,15 +161,18 @@ if __name__ == "__main__":
         dict_tagged_sentences = dicttagger.tag(pos_tagged_sentences)
         # pprint(dict_tagged_sentences)
 
-        print("analyzing sentiment...")
+        # print("analyzing sentiment...")
         score = sentiment_score(dict_tagged_sentences)
         score_arr.append(score)
         if score < 0:
             neg_count+=1
+            print tweet + " negative"
         elif score > 0:
             pos_count+=1
+            print tweet + " positive"
         elif score == 0:
             neut_count+=1
+            print tweet + " netral"
 
         #untuk menganalisa kumulatif positif dan negatifnya
         # if score < 0:
